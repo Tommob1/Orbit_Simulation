@@ -9,12 +9,12 @@ m1 = 1.989e30
 m2 = 5.972e24
 
 #Initial positions (in meters)
-r1 = np.array([0, 0])
-r2 = np.array([1.496e11, 0])
+r1 = np.array([0.0, 0.0], dtype=float)
+r2 = np.array([1.496e11, 0.0], dtype=float)
 
 #Initial velocities (m/s)
-v1 = np.array([0, 0])
-v2 = np.array([0, 29780])
+v1 = np.array([0.0, 0.0], dtype=float)
+v2 = np.array([0.0, 29780.0], dtype=float)
 
 #Time step
 dt = 60 * 60
