@@ -62,8 +62,8 @@ ax.set_xlim(-1.6e11, 1.6e11)
 ax.set_ylim(-1.6e11, 1.6e11)
 
 # Initialize the plot elements we want to animate
-line1, = ax.plot([], [], lw=2, label='Body 1 Path')
-line2, = ax.plot([], [], lw=2, label='Body 2 Path')
+line1, = ax.plot([], [], lw=2, label='Body 1 Path', color='orange')
+line2, = ax.plot([], [], lw=2, label='Body 2 Path', color='blue')
 point1, = ax.plot([], [], 'o', color='orange', label='Body 1')
 point2, = ax.plot([], [], 'o', color='blue', label='Body 2')
 
