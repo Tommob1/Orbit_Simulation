@@ -62,24 +62,26 @@ ax.set_xlim(-1.6e11, 1.6e11)
 ax.set_ylim(-1.6e11, 1.6e11)
 
 # Initialize the plot elements we want to animate
-line1, = ax.plot([], [], lw=2, label='Body 1')
-line2, = ax.plot([], [], lw=2, label='Body 2')
-point1, = ax.plot([], [], 'o', color='orange', label='Initial Position 1')
-point2, = ax.plot([], [], 'o', color='blue', label='Initial Position 2')
+line1, = ax.plot([], [], lw=2, label='Body 1 Path')
+line2, = ax.plot([], [], lw=2, label='Body 2 Path')
+point1, = ax.plot([], [], 'o', color='orange', label='Body 1')
+point2, = ax.plot([], [], 'o', color='blue', label='Body 2')
 
 # Initialize function
 def init():
     line1.set_data([], [])
     line2.set_data([], [])
-    point1.set_data(positions1[0, 0], positions1[0, 1])
-    point2.set_data(positions2[0, 0], positions2[0, 1])
+    point1.set_data([], [])
+    point2.set_data([], [])
     return line1, line2, point1, point2
 
 # Animation function
 def animate(i):
     line1.set_data(positions1[:i, 0], positions1[:i, 1])
     line2.set_data(positions2[:i, 0], positions2[:i, 1])
-    return line1, line2
+    point1.set_data(positions1[i, 0], positions1[i, 1])
+    point2.set_data(positions2[i, 0], positions2[i, 1])
+    return line1, line2, point1, point2
 
 # Call the animator
 anim = animation.FuncAnimation(fig, animate, init_func=init,
