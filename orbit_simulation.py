@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+#Gravitational constants, mass, velocities
 G = 6.67430e-11
 m1 = 1.989e30
 m2 = 5.972e24
