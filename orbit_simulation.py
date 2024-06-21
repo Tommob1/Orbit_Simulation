@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-#Gravitational constants, mass, velocities
 G = 6.67430e-11
 m1 = 1.989e30
 m2 = 5.972e24
@@ -28,7 +27,6 @@ while t < t_max:
 
     v1 += force_vector / m1 * dt
     v2 -= force_vector / m2 * dt
-
     r1 += v1 * dt
     r2 += v2 * dt
 
