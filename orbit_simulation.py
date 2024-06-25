@@ -62,8 +62,8 @@ point1, = ax.plot([], [], 'o', color='orange', label='Body 1')
 point2, = ax.plot([], [], 'o', color='blue', label='Body 2')
 
 # Text annotations for telemetry data
-telemetry_text1 = ax.text(0.02, 0.95, '', transform=ax.transAxes, color='orange')
-telemetry_text2 = ax.text(0.02, 0.90, '', transform=ax.transAxes, color='blue')
+telemetry_text1 = ax.text(0, 0, '', color='orange', ha='left', va='bottom')
+telemetry_text2 = ax.text(0, 0, '', color='blue', ha='left', va='bottom')
 
 def init():
     line1.set_data([], [])
@@ -80,11 +80,13 @@ def animate(i):
     point1.set_data(positions1[i, 0], positions1[i, 1])
     point2.set_data(positions2[i, 0], positions2[i, 1])
 
+    telemetry_text1.set_position((positions1[i, 0], positions1[i, 1]))
     telemetry_text1.set_text(
-        f'Body 1 (Sun)\nPosition: ({positions1[i, 0]:.2e}, {positions1[i, 1]:.2e})\nVelocity: ({v1[0]:.2e}, {v1[1]:.2e})'
+        f'Body 1 (Sun)\n({positions1[i, 0]:.2e}, {positions1[i, 1]:.2e})'
     )
+    telemetry_text2.set_position((positions2[i, 0], positions2[i, 1]))
     telemetry_text2.set_text(
-        f'Body 2 (Earth)\nPosition: ({positions2[i, 0]:.2e}, {positions2[i, 1]:.2e})\nVelocity: ({v2[0]:.2e}, {v2[1]:.2e})'
+        f'Body 2 (Earth)\n({positions2[i, 0]:.2e}, {positions2[i, 1]:.2e})'
     )
 
     return line1, line2, point1, point2, telemetry_text1, telemetry_text2
