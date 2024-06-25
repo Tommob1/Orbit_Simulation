@@ -62,8 +62,10 @@ point1, = ax.plot([], [], 'o', color='orange', label='Body 1')
 point2, = ax.plot([], [], 'o', color='blue', label='Body 2')
 
 # Text annotations for telemetry data
-telemetry_text1 = ax.text(0, 0, '', color='orange', ha='left', va='bottom')
-telemetry_text2 = ax.text(0, 0, '', color='blue', ha='left', va='bottom')
+telemetry_text1 = ax.text(0, 0, '', color='orange', ha='left', va='bottom',
+                          bbox=dict(facecolor='w', edgecolor='w', alpha=0.5))
+telemetry_text2 = ax.text(0, 0, '', color='blue', ha='left', va='bottom',
+                          bbox=dict(facecolor='w', edgecolor='w', alpha=0.5))
 
 def init():
     line1.set_data([], [])
