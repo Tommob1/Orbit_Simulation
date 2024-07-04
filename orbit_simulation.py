@@ -1,18 +1,22 @@
 import numpy as np
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+# Constants
 G = 6.67430e-11
-m1 = 1.989e30
-m2 = 5.972e24
+m1 = 1.989e30  # Mass of the Sun
+m2 = 5.972e24  # Mass of the Earth
 
+# Initial conditions
 r1 = np.array([0.0, 0.0], dtype=float)
 r2 = np.array([1.496e11, 0.0], dtype=float)
 v1 = np.array([0.0, 0.0], dtype=float)
 v2 = np.array([0.0, 29780.0], dtype=float)
 
-dt = 60 * 60
-t_max = 365.25 * 24 * 60 * 60
+dt = 60 * 60  # Time step (1 hour)
+t_max = 365.25 * 24 * 60 * 60  # Simulation time (1 year)
 
 positions1 = []
 positions2 = []
@@ -42,14 +46,19 @@ while t < t_max:
 positions1 = np.array(positions1)
 positions2 = np.array(positions2)
 
+# Create the main window
+root = tk.Tk()
+root.title("Orbit Simulation")
+
+# Create a figure for plotting
 fig, ax = plt.subplots(figsize=(8, 8))
 ax.set_xlim(-1.6e11, 1.6e11)
 ax.set_ylim(-1.6e11, 1.6e11)
 
 line1, = ax.plot([], [], lw=2, label='Body 1 Path', color='orange')
 line2, = ax.plot([], [], lw=2, label='Body 2 Path', color='blue')
-point1, = ax.plot([], [], 'o', color='orange', label='Body 1')
-point2, = ax.plot([], [], 'o', color='blue', label='Body 2')
+point1 = ax.scatter([], [], color='orange', label='Body 1')
+point2 = ax.scatter([], [], color='blue', label='Body 2')
 
 telemetry_text1 = ax.text(0, 0, '', color='orange', ha='left', va='bottom',
                           bbox=dict(facecolor='white', edgecolor='none', alpha=0.7))
@@ -59,8 +68,8 @@ telemetry_text2 = ax.text(0, 0, '', color='blue', ha='left', va='bottom',
 def init():
     line1.set_data([], [])
     line2.set_data([], [])
-    point1.set_data([], [])
-    point2.set_data([], [])
+    point1.set_offsets(np.empty((0, 2)))
+    point2.set_offsets(np.empty((0, 2)))
     telemetry_text1.set_text('')
     telemetry_text2.set_text('')
     return line1, line2, point1, point2, telemetry_text1, telemetry_text2
@@ -68,8 +77,8 @@ def init():
 def animate(i):
     line1.set_data(positions1[:i, 0], positions1[:i, 1])
     line2.set_data(positions2[:i, 0], positions2[:i, 1])
-    point1.set_data(positions1[i, 0], positions1[i, 1])
-    point2.set_data(positions2[i, 0], positions2[i, 1])
+    point1.set_offsets([positions1[i, 0], positions1[i, 1]])
+    point2.set_offsets([positions2[i, 0], positions2[i, 1]])
 
     telemetry_text1.set_position((positions1[i, 0], positions1[i, 1]))
     telemetry_text1.set_text(
@@ -85,11 +94,10 @@ def animate(i):
 anim = animation.FuncAnimation(fig, animate, init_func=init,
                                frames=len(positions1), interval=20, blit=True)
 
-ax.set_xlabel('x (m)')
-ax.set_ylabel('y (m)')
-plt.suptitle('Orbit Simulation', y=0.95, fontsize=16)
-ax.legend()
-ax.grid()
-ax.axis('equal')
+# Create a canvas and embed the plot
+canvas = FigureCanvasTkAgg(fig, master=root)
+canvas.draw()
+canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-plt.show()
+# Run the Tkinter main loop
+root.mainloop()
