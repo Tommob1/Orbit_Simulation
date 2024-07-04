@@ -4,19 +4,17 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-# Constants
 G = 6.67430e-11
-m1 = 1.989e30  # Mass of the Sun
-m2 = 5.972e24  # Mass of the Earth
+m1 = 1.989e30
+m2 = 5.972e24
 
-# Initial conditions
 r1 = np.array([0.0, 0.0], dtype=float)
 r2 = np.array([1.496e11, 0.0], dtype=float)
 v1 = np.array([0.0, 0.0], dtype=float)
 v2 = np.array([0.0, 29780.0], dtype=float)
 
-dt = 60 * 60  # Time step (1 hour)
-t_max = 365.25 * 24 * 60 * 60  # Simulation time (1 year)
+dt = 60 * 60
+t_max = 365.25 * 24 * 60 * 60
 
 positions1 = []
 positions2 = []
@@ -46,11 +44,9 @@ while t < t_max:
 positions1 = np.array(positions1)
 positions2 = np.array(positions2)
 
-# Create the main window
 root = tk.Tk()
 root.title("Orbit Simulation")
 
-# Create a figure for plotting
 fig, ax = plt.subplots(figsize=(8, 8))
 ax.set_xlim(-1.6e11, 1.6e11)
 ax.set_ylim(-1.6e11, 1.6e11)
@@ -94,10 +90,8 @@ def animate(i):
 anim = animation.FuncAnimation(fig, animate, init_func=init,
                                frames=len(positions1), interval=20, blit=True)
 
-# Create a canvas and embed the plot
 canvas = FigureCanvasTkAgg(fig, master=root)
 canvas.draw()
 canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-# Run the Tkinter main loop
 root.mainloop()
